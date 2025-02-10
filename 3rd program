@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <ctype.h>
+
+void lex_analyzer(const char* source) {
+    int i = 0;
+    char ch;
+    
+    while ((ch = source[i++]) != '\0') {
+        // Check if the character is an arithmetic operator
+        if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+            printf("Operator: %c\n", ch);
+        }
+    }
+}
+
+int main() {
+    const char* source_code = "a + b - c * d / e";
+    
+    lex_analyzer(source_code);
+    return 0;
+}
