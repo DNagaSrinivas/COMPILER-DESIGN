@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <ctype.h>
+
+void lex_analyzer(const char* source) {
+    int i = 0, ch;
+    
+    while ((ch = source[i++]) != '\0') {
+        if (ch == '/') {
+            if (source[i] == '/') { // Single-line comment
+                printf("Single-line comment: ");
+                while ((ch = source[i++]) != '\0' && ch != '\n') {
+                    putchar(ch);
+                }
+                printf("\n");
+            } else if (source[i] == '*') { // Multi-line comment
+                printf("Multi-line comment: ");
+                i++; // Skip '*'
+                while ((ch = source[i++]) != '\0') {
+                    putchar(ch);
+                    if (source[i-1] == '*' && source[i] == '/') {
+                        i++; // Skip '/'
+                        break;
+                    }
+                }
+                printf("\n");
+            }
+        }
+    }
+}
+
+int main() {
+    const char* source_code = 
+        "int main() {\n"
+        "    // This is a single-line comment\n"
+        "    /* This is a multi-line comment */\n"
+        "    int num = 10;\n"
+        "    num = num + 1;\n"
+        "}";
+
+    lex_analyzer(source_code);
+    return 0;
+}
